@@ -3,5 +3,5 @@ echo ------------------------------Activating environment
 source .venv/bin/activate
 echo ------------------------------Launching Exp $1
 cd code
-python3 engine.py experiment$1
+python engine.py experiment$1
 echo ------------------------------Terminated
