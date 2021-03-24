@@ -16,7 +16,8 @@
               {
                      "label": "Launch Exp 3",
                      "type": "shell",
-                     "command": "${workspaceFolder}/.vscode/launch-exp 3"
+                     "command": "${workspaceFolder}/.vscode/launch-exp 3",
+                     "problemMatcher": []
               }
        ]
 }
