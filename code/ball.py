@@ -11,34 +11,51 @@ Bounds = []
 # Une variable globale qui servira à stocker la soufflerie (s'il y en a une)
 Wind = None
 
-gravity = [0.0, -sc_const.g *2]
+'''
+Vecteur gravitation
+'''
+gravity = [0.0, -sc_const.g]
 
-
+'''
+Affichage d'un vecteur avec son nom. Utile pour le debugage.
+'''
 def print_vec(name, vec) :
     print(name, " = ", vec[0], ", ", vec[1])
 
-
+'''
+Normalisation d'un vecteur.
+'''
 def normalize(vec):
     norm = math.sqrt(vec[0]*vec[0] + vec[1]*vec[1])
     return [vec[0]/norm, vec[1]/norm]
 
-
+'''
+Produit scalaire entre deux vecteurs.
+'''
 def dot(vec1, vec2):
     return vec1[0] * vec2[0] + vec1[1] * vec2[1]
 
-
+'''
+Calcule la norme d'un vecteur.
+'''
 def lenght(vec):
     return math.sqrt(dot(vec, vec))
 
-
+'''
+Transforme deux points en un vecteur.
+'''
 def to_vec(point1, point2):
     return [point2[0] - point1[0], point2[1] - point1[1]]
 
-
+'''
+Calcule la nouvelle position en fonction de l'avancement et de la vitesse.
+'''
 def new_pos(deltat, old_speed):
     return deltat * old_speed
 
-
+'''
+Calcule la nouvelle vitesse en fonction de l'avancement, l'ancienne vitesse, les coefficients de frottement et la masse.
+'''
 def new_speed(deltat, old_speed, coeff1, coeff2, mass):
     coeff = float((coeff1/mass + coeff2/mass * abs(lenght(old_speed))))
     strenght = (gravity + [float(coeff * old_speed[0]), float(coeff * old_speed[1])])
@@ -71,7 +88,7 @@ class FlatWall(game.BaseFlatWall):
         v = normalize(to_vec(p1, p2))
 
         '''
-        On calcule le déterminant. Si celui est nul, les deux droites (mur et balle) sont parrallèle : pas de collision.
+        On calcule le déterminant. Si celui est nul, les deux droites (mur et balle) sont parrallèles : pas de collision.
         '''
         det = v[0] * d[1] - v[1] * d[0]
         if det == 0:
@@ -101,9 +118,9 @@ class FlatWall(game.BaseFlatWall):
         dist = [p2[0] - k[0], p2[1] - k[1]]
 
         '''
-        Dans le cas où p2 est avant le mur, on regarde si la boule intersecte le mur.
+        Dans le cas où p2 est avant le point de collision, on regarde si la boule intersecte le mur.
         '''
-        if sin_theta * lenght(dist) >= r:
+        if lenght(to_vec(p1, p2)) <= lenght(to_vec(p1, k))  and sin_theta * lenght(dist) >= r:
             return [False, [0, 0], 0, [0, 0]]
         
         '''
@@ -120,7 +137,7 @@ class FlatWall(game.BaseFlatWall):
         '''
         n = normalize(self.N)
         '''
-        On calcule la reflexion de la direction de la balle par rapport au mur avec "rflx".
+        On calcule la reflexion de la direction de la balle par rapport au mur : "rflx".
         '''
         scl = 2 * dot(v, n)
         rflx = normalize([v[0] - scl * n[0], v[1] - scl * n[1]])
