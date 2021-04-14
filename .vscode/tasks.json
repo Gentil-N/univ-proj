@@ -7,17 +7,6 @@
                      "label": "Launch Exp 1",
                      "type": "shell",
                      "command": "${workspaceFolder}/.vscode/launch-exp 1"
-              },
-              {
-                     "label": "Launch Exp 2",
-                     "type": "shell",
-                     "command": "${workspaceFolder}/.vscode/launch-exp 2"
-              },
-              {
-                     "label": "Launch Exp 3",
-                     "type": "shell",
-                     "command": "${workspaceFolder}/.vscode/launch-exp 3",
-                     "problemMatcher": []
               }
        ]
 }
